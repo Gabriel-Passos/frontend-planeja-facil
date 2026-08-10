@@ -1,75 +1,104 @@
-# React + TypeScript + Vite
+# 💰 Planeja Fácil — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web para controle de finanças pessoais, permitindo organizar receitas e despesas por ano e por mês, com colaboração entre múltiplos usuários por meio de papéis de acesso.
 
-Currently, two official plugins are available:
+Este repositório contém o **frontend** da aplicação, consumindo a API REST do [backend](#) construído em NestJS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React** + **Vite**
+- **TypeScript**
+- **React Router v7**
+- **Formik** + **Yup** — formulários e validação
+- **shadcn/ui** — componentes de interface
+- **Axios** — cliente HTTP com interceptor de refresh token
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🔐 Autenticação com JWT (access + refresh token via cookie `httpOnly`)
+- ✉️ Confirmação de e-mail não bloqueante (usuário navega normalmente enquanto vê um aviso)
+- 🔁 Recuperação e redefinição de senha
+- 📅 Organização financeira por **Ano** → **Mês** → **Lançamentos** (receitas e despesas)
+- 👥 Controle de acesso por papéis: **Admin**, **Editor** e **Participante**
+- 💾 Autosave dos cartões de mês
+- 🗑️ Exclusão suave (soft delete) com opção de restauração
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Estrutura de pastas
+
+O projeto segue uma organização **baseada em features**:
 
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+├── features/
+│   ├── auth/
+│   ├── years/
+│   ├── month-cards/
+│   └── entries/
+├── shared/
+│   ├── components/
+│   ├── hooks/
+│   └── services/
+├── lib/
+│   └── axios.ts       # cliente Axios + interceptor de refresh token
+└── routes/
 ```
+
+---
+
+## ⚙️ Configuração e execução
+
+### Pré-requisitos
+- Node.js 18+
+- Backend rodando localmente (ou URL da API configurada)
+
+### Instalação
+
+```bash
+git clone <url-do-repositorio>
+cd planeja-facil-frontend
+npm install
+```
+
+### Variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### Rodando em desenvolvimento
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível em `http://localhost:5173`.
+
+### Build de produção
+
+```bash
+npm run build
+```
+
+---
+
+## 🔒 Autenticação
+
+O fluxo de autenticação utiliza **access token** em memória e **refresh token** armazenado em cookie `httpOnly`, com rotação automática e detecção de reuso. O cliente Axios possui um interceptor que renova o access token automaticamente quando expira, enfileirando as requisições feitas durante a renovação.
+
+---
+
+## 📌 Status do projeto
+
+Backend em estágio avançado de desenvolvimento. Frontend em construção — telas de autenticação, gerenciamento de anos e lançamentos financeiros sendo implementadas.
+
+---
+
+<p align="center">Feito com 💙 para ajudar a organizar as finanças de forma simples.</p>
