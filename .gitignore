@@ -24,5 +24,5 @@ dist-ssr
 *.sw?
 
 # Env vars
-*.env
-*.env.local
+.env
+.env.local
