@@ -2,7 +2,7 @@
 
 Aplicação web para controle de finanças pessoais, permitindo organizar receitas e despesas por ano e por mês, com colaboração entre múltiplos usuários por meio de papéis de acesso.
 
-Este repositório contém o **frontend** da aplicação, consumindo a API REST do [backend](#) construído em NestJS.
+Este repositório contém o **frontend** da aplicação, consumindo a API REST do [backend](https://github.com/Gabriel-Passos/backend-planeja-facil) construído em NestJS.
 
 ---
 
