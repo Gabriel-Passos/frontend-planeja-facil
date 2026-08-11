@@ -9,7 +9,9 @@ import { RegisterPage } from "../pages/RegisterPage";
 import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
 import { DashboardPage } from "../pages/DashboardPage";
 import { TrashPage } from "../pages/TrashPage";
-import { MyPlanningPage } from "../pages/MyPlanningPage";
+import { YearsPage } from "../pages/MyPlanning/YearsPage";
+import { MonthsPage } from "../pages/MyPlanning/MonthsPage";
+import { PlanningPage } from "../pages/MyPlanning/PlanningPage";
 import { ProfilePage } from "../pages/ProfilePage";
 
 export function CustomRoutes() {
@@ -29,7 +31,12 @@ export function CustomRoutes() {
         <Route element={<ProtectedRoute />}>
           <Route path={AppRoutes.DASHBOARD} element={<DashboardPage />} />
           <Route path={AppRoutes.TRASH} element={<TrashPage />} />
-          <Route path={AppRoutes.MY_PLANNING} element={<MyPlanningPage />} />
+          <Route path={AppRoutes.MY_PLANNING} element={<YearsPage />} />
+          <Route path={AppRoutes.MY_PLANNING_MONTHS} element={<MonthsPage />} />
+          <Route
+            path={AppRoutes.MY_PLANNING_MONTHS_PLANNING}
+            element={<PlanningPage />}
+          />
           <Route path={AppRoutes.PROFILE} element={<ProfilePage />} />
           {/* <Route path={AppRoutes.CONFIRM_ACCOUNT} element={<ConfirmAccountPage />} /> */}
         </Route>

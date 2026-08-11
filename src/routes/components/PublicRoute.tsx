@@ -6,7 +6,7 @@ export function PublicRoute() {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return <></>;
   }
 
   if (user) {
