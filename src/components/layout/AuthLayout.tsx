@@ -6,7 +6,7 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ title, description, children }: AuthLayoutProps) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-neutral-50">
       <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md flex flex-col gap-6">
         <img
           src="/images/png/logo-horizontal.png"

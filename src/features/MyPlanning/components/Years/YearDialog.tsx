@@ -19,7 +19,8 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { years as yearOptions } from "../../utils/createYearsRange";
-import { useYear, type Year } from "../../hooks/useYear";
+import { useYearMutations } from "../../hooks/useYearMutations";
+import type { Year } from "../../types/year.types";
 import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
 
@@ -42,7 +43,7 @@ export function YearDialog({
   existingYears,
   onSuccess,
 }: YearDialogProps) {
-  const { addYear, updateYear } = useYear();
+  const { addYear, updateYear } = useYearMutations();
 
   // Anos que o usuário já tem cadastrados, exceto o próprio ano sendo
   // editado (senão o valor atual apareceria desabilitado no modo edição).
