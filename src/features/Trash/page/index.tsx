@@ -9,7 +9,7 @@ import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
 import { DeleteDialog } from "../../../components/common/delete-dialog";
 import type { Year } from "../../MyPlanning/types/year.types";
-import { formatBulkResultMessage } from "../../MyPlanning/utils/formatBulkResultMessage";
+import { formatBulkResultMessage } from "../../MyPlanning/utils/format-bulk-result-message";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { YearCard } from "@/src/components/common/year-card";
 import { LayoutHeader } from "@/src/components/common/layout-header";
@@ -194,7 +194,7 @@ export function Trash() {
                   <Checkbox
                     checked={allVisibleSelected}
                     onCheckedChange={toggleSelectAllVisible}
-                    className="bg-white border-border rounded"
+                    className="bg-white rounded"
                   />
                   Selecionar todos
                 </label>
@@ -235,7 +235,6 @@ export function Trash() {
                   <YearCard
                     key={deletedYear.id}
                     year={deletedYear}
-                    menu={{ onClick: () => {} }}
                     checkbox={{
                       checked: selectedIds.has(deletedYear.id),
                       onCheckedChange: () => toggleSelected(deletedYear.id),

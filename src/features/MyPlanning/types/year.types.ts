@@ -22,3 +22,29 @@ export interface BulkOperationResult {
   succeeded: string[];
   failed: BulkOperationFailure[];
 }
+
+export type YearMemberRole = "ADMIN" | "EDITOR" | "PARTICIPANTE";
+
+export interface YearMemberUser {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface YearMember {
+  id: string;
+  yearId: string;
+  userId: string;
+  role: YearMemberRole;
+  invitedAt: string;
+  acceptedAt: string | null;
+  user: YearMemberUser;
+}
+
+export interface YearDetail extends Year {
+  creatorId: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  members: YearMember[];
+}

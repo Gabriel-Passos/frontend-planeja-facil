@@ -1,3 +1,3 @@
-export { Years } from "./components/Years";
-export { Months } from "./components/Months";
-export { Planning } from "./components/Planning";
+export { MyPlanning } from "./page/my-planning";
+export { Months } from "./page/months";
+export { Planning } from "./page/planning";

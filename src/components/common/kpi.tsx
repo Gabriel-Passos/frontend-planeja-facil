@@ -3,6 +3,7 @@ import type {
   KpiVariant,
 } from "@/src/features/Dashboard/types/kpi.types";
 import { cn } from "@/src/lib/utils/cn";
+import { formatNumberToCurrency } from "@/src/utils/number-format";
 import type { LucideProps } from "lucide-react";
 
 interface KpiProps {
@@ -25,10 +26,7 @@ export function Kpi({
   function randerValue() {
     switch (type) {
       case "CURRENCY": {
-        const formatedValue = Intl.NumberFormat("pt-BR", {
-          currency: "BRL",
-          style: "currency",
-        }).format(Number(value));
+        const formatedValue = formatNumberToCurrency(Number(value));
         return formatedValue;
       }
       case "PERCENT": {
@@ -56,9 +54,13 @@ export function Kpi({
   }
 
   return (
-    <div className="p-6 border rounded-xl border-border bg-white flex flex-col gap-2 w-full">
+    <div
+      className={`p-6 border rounded-xl bg-white flex flex-col shadow-card gap-2 w-full`}
+    >
       <div className="flex items-center justify-between">
-        <p className="font-inter text-muted-foreground">{title}</p>
+        <p className="font-inter text-sm text-muted-foreground uppercase">
+          {title}
+        </p>
         {Icon && <Icon className="text-muted-foreground" />}
       </div>
 

@@ -1,1 +1,1 @@
-export { Trash } from "./components/trash";
+export { Trash } from "./page";

@@ -18,11 +18,11 @@ import {
 } from "@/src/components/ui/select";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { years as yearOptions } from "../../utils/createYearsRange";
-import { useYearMutations } from "../../hooks/useYearMutations";
-import type { Year } from "../../types/year.types";
 import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
+import type { Year } from "../types/year.types";
+import { useYearMutations } from "../hooks/useYearMutations";
+import { years as yearOptions } from "../utils/create-years-range";
 
 interface YearDialogProps {
   open: boolean;

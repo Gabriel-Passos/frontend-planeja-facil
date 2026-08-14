@@ -16,7 +16,7 @@ import { AppRoutes } from "@/src/constants/app-routes";
 
 interface YearCardProps {
   year: Year;
-  menu: {
+  menu?: {
     onClick: () => void;
   };
   checkbox: {
@@ -43,23 +43,26 @@ export function YearCard({ year, menu, checkbox, dialog }: YearCardProps) {
   }
 
   return (
-    <div className="relative flex flex-col p-4 border rounded-xl border-border gap-6 bg-white w-full">
+    <div className="flex flex-col p-4 border rounded-xl gap-6 bg-white w-full">
       <div className="flex items-center justify-between">
         <div onClick={(event) => event.stopPropagation()}>
           <Checkbox
             checked={checkbox.checked}
             onCheckedChange={checkbox.onCheckedChange}
-            className="bg-stone-50 border-border rounded"
+            className="bg-white rounded"
           />
         </div>
 
-        <Menubar className="hover:text-teal-800 group-hover:text-white border-0">
+        <Menubar className="border-0">
           <MenubarMenu>
             <MenubarTrigger
               className="px-0 py-0.5 hover:bg-transparent"
-              onClick={menu.onClick}
+              onClick={menu?.onClick}
             >
-              <MoreVertical className="text-inherit" size={16} />
+              <MoreVertical
+                className="text-muted-foreground hover:text-foreground"
+                size={16}
+              />
             </MenubarTrigger>
 
             <MenubarContent className="w-fit">

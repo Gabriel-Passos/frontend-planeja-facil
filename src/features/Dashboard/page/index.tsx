@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useState } from "react";
-import { years } from "../../MyPlanning/utils/createYearsRange";
+import { years } from "../../MyPlanning/utils/create-years-range";
 import { LayoutHeader } from "@/src/components/common/layout-header";
 
 export function Dashboard() {
