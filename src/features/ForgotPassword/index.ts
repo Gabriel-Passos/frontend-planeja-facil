@@ -1,1 +1,1 @@
-export { ForgotPasswordForm } from "./components/ForgotPasswordForm";
+export { ForgotPasswordForm } from "./components/forgot-password-form";
