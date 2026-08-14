@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
-import { DashboardLayout } from "@/src/components/layout/DashboardLayout";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarGroup,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/src/components/ui/menubar";
+import { DashboardLayout } from "@/src/components/layout/dashboard-layout";
 import { Separator } from "@/src/components/ui/separator";
 import { Button } from "@/src/components/ui/button";
-import { MoreVertical, RotateCcw, Trash2 } from "lucide-react";
+import { RotateCcw, Trash2 } from "lucide-react";
 import { useDeletedYears } from "../../MyPlanning/hooks/useDeletedYears";
 import { useProgressiveLoading } from "@/src/hooks/use-progressive-loading";
 import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
-import { DeleteDialog } from "../../../components/DeleteDialog";
+import { DeleteDialog } from "../../../components/common/delete-dialog";
 import type { Year } from "../../MyPlanning/types/year.types";
 import { formatBulkResultMessage } from "../../MyPlanning/utils/formatBulkResultMessage";
 import { Checkbox } from "@/src/components/ui/checkbox";
+import { YearCard } from "@/src/components/common/year-card";
+import { LayoutHeader } from "@/src/components/common/layout-header";
 
 export function Trash() {
   const {
@@ -171,13 +164,16 @@ export function Trash() {
 
   return (
     <DashboardLayout loading={isLoadingDeletedYears} progress={progress}>
-      <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-semibold">Lixeira</h1>
+      <div className="flex flex-col gap-6">
+        <LayoutHeader
+          title="Lixeira"
+          description="Restaure os anos ou os remova permanentemente."
+        />
 
         <Separator orientation="horizontal" />
 
-        <div className="flex flex-col gap-4 mb-2">
-          <p className="text-xl font-medium">Anos</p>
+        <div className="flex flex-col gap-6">
+          <p className="text-lg font-medium font-inter">Anos</p>
 
           {deletedYearsError && (
             <p role="alert" className="text-destructive">
@@ -198,7 +194,7 @@ export function Trash() {
                   <Checkbox
                     checked={allVisibleSelected}
                     onCheckedChange={toggleSelectAllVisible}
-                    className="bg-white"
+                    className="bg-white border-border rounded"
                   />
                   Selecionar todos
                 </label>
@@ -234,63 +230,35 @@ export function Trash() {
                 )}
               </div>
 
-              <div className="grid grid-cols-8 gap-6">
+              <div className="grid grid-cols-4 gap-4">
                 {deletedYears.map((deletedYear) => (
-                  <div
+                  <YearCard
                     key={deletedYear.id}
-                    className="group relative w-31 h-35 flex flex-col justify-between p-3 border rounded border-blue-500 bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white"
-                  >
-                    <div>
-                      <Checkbox
-                        className="absolute top-0 left-0 mx-3 my-3 bg-white border-blue-500"
-                        checked={selectedIds.has(deletedYear.id)}
-                        onCheckedChange={() => toggleSelected(deletedYear.id)}
-                      />
-
-                      <Menubar
-                        className="absolute top-0 right-0 p-0 mx-3 my-2 hover:text-blue-700 group-hover:text-white border-0"
-                        onClick={(event) => {
-                          event.preventDefault();
-                        }}
-                      >
-                        <MenubarMenu>
-                          <MenubarTrigger className="px-0 py-0.5 hover:bg-transparent">
-                            <MoreVertical className="text-inherit" size={16} />
-                          </MenubarTrigger>
-                          <MenubarContent>
-                            <h6 className="text-base px-1.5 text-muted-foreground">
-                              Ano: {deletedYear.year}
-                            </h6>
-                            <MenubarSeparator />
-                            <MenubarGroup>
-                              <MenubarItem
-                                onClick={() => void handleRestore(deletedYear)}
-                              >
-                                <RotateCcw className="mr-1" /> Restaurar
-                              </MenubarItem>
-                            </MenubarGroup>
-                            <MenubarSeparator />
-                            <MenubarItem
-                              variant="destructive"
-                              onClick={() => {
-                                setSelectedYear(deletedYear);
-                                handleOpenPermanentDeleteDialog();
-                              }}
-                            >
-                              <Trash2 className="mr-1" /> Apagar definitivamente
-                            </MenubarItem>
-                          </MenubarContent>
-                        </MenubarMenu>
-                      </Menubar>
-                    </div>
-
-                    <div>
-                      <p className="text-base text-inherit">Ano</p>
-                      <p className="text-xl font-medium text-inherit">
-                        {deletedYear.year}
-                      </p>
-                    </div>
-                  </div>
+                    year={deletedYear}
+                    menu={{ onClick: () => {} }}
+                    checkbox={{
+                      checked: selectedIds.has(deletedYear.id),
+                      onCheckedChange: () => toggleSelected(deletedYear.id),
+                    }}
+                    dialog={{
+                      items: [
+                        {
+                          name: "Restaurar",
+                          icon: RotateCcw,
+                          onClick: () => void handleRestore(deletedYear),
+                        },
+                        {
+                          name: "Remover permanentemente",
+                          icon: Trash2,
+                          variant: "destructive",
+                          onClick: () => {
+                            setSelectedYear(deletedYear);
+                            handleOpenPermanentDeleteDialog();
+                          },
+                        },
+                      ],
+                    }}
+                  />
                 ))}
               </div>
             </>

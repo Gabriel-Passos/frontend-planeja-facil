@@ -1,13 +1,9 @@
 import { AuthProvider } from "./AuthContex";
 
 interface GlobalContextProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export function GlobalContextProvider ({ children }: GlobalContextProps) {
-    return (
-        <AuthProvider>
-            {children}
-        </AuthProvider>
-    )
+export function GlobalContextProvider({ children }: GlobalContextProps) {
+  return <AuthProvider>{children}</AuthProvider>;
 }

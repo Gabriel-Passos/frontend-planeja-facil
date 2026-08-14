@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/src/components/layout/DashboardLayout";
+import { DashboardLayout } from "@/src/components/layout/dashboard-layout";
 import { Button } from "@/src/components/ui/button";
 import { Separator } from "@/src/components/ui/separator";
 import { ChevronLeft } from "lucide-react";
