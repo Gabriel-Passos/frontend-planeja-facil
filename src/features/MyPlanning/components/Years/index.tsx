@@ -1,12 +1,11 @@
-import { DashboardLayout } from "@/src/components/layout/DashboardLayout";
+import { DashboardLayout } from "@/src/components/layout/dashboard-layout";
 import { Button } from "@/src/components/ui/button";
-import { MoreVertical, Pen, Plus, Trash2, UserPlus } from "lucide-react";
-import { YearDialog } from "./YearDialog";
+import { Pen, Plus, Trash2, UserPlus } from "lucide-react";
+import { YearDialog } from "./year-dialog";
 import { useState } from "react";
 import { useYearsList } from "../../hooks/useYearList";
 import { useYearMutations } from "../../hooks/useYearMutations";
 import type { Year } from "../../types/year.types";
-import { Link } from "react-router-dom";
 import { Input } from "@/src/components/ui/input";
 import { Separator } from "@/src/components/ui/separator";
 import { Field } from "@/src/components/ui/field";
@@ -18,22 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-import { AppRoutes } from "@/src/constants/app-routes";
 import { useProgressiveLoading } from "@/src/hooks/use-progressive-loading";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarGroup,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/src/components/ui/menubar";
-import { DeleteDialog } from "../../../../components/DeleteDialog";
+
+import { DeleteDialog } from "../../../../components/common/delete-dialog";
 import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
 import { formatBulkResultMessage } from "../../utils/formatBulkResultMessage";
 import { Checkbox } from "@/src/components/ui/checkbox";
+import { YearCard } from "@/src/components/common/year-card";
+import { LayoutHeader } from "@/src/components/common/layout-header";
 
 const LIMIT_OPTIONS = [8, 16, 24, 32];
 
@@ -184,20 +176,19 @@ export function Years() {
 
   return (
     <DashboardLayout loading={isLoading} progress={progress}>
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Meu planejamento</h1>
-
-          <Button
-            type="button"
-            onClick={() => {
+      <div className="flex flex-col gap-6">
+        <LayoutHeader
+          title="Meu planejamento"
+          description="Organize suas finanças em anos."
+          button={{
+            text: "Adicionar",
+            icon: Plus,
+            onClick: () => {
               setSelectedYear(undefined);
               handleOpenDialog();
-            }}
-          >
-            <Plus /> Adicionar ano
-          </Button>
-        </div>
+            },
+          }}
+        />
 
         <Separator orientation="horizontal" />
 
@@ -229,7 +220,7 @@ export function Years() {
         ) : (
           <div className="w-full flex flex-col gap-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
-              <p className="text-xl font-medium">Anos</p>
+              <p className="text-lg font-medium font-inter">Anos</p>
 
               <div className="flex items-center gap-3">
                 <div className="w-70">
@@ -302,7 +293,7 @@ export function Years() {
                   <Checkbox
                     checked={allVisibleSelected}
                     onCheckedChange={toggleSelectAllVisible}
-                    className="bg-white"
+                    className="bg-white border-border rounded"
                   />
                   Selecionar todos nesta página
                 </label>
@@ -332,77 +323,39 @@ export function Years() {
             )}
 
             {!isFilteredEmpty && !error && (
-              <div className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 {years.map((year) => (
-                  <Link
-                    to={`${AppRoutes.MY_PLANNING}/${year.id}/month-cards`}
+                  <YearCard
                     key={year.id}
-                  >
-                    <div
-                      key={year.id}
-                      className="group relative w-31 h-35 flex flex-col justify-between p-3 border rounded border-blue-500 bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white"
-                    >
-                      <div>
-                        <div
-                          className="absolute top-0 left-0 mx-3 my-3"
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <Checkbox
-                            checked={selectedIds.has(year.id)}
-                            onCheckedChange={() => toggleSelected(year.id)}
-                            className="bg-white border-blue-500"
-                          />
-                        </div>
-
-                        <Menubar
-                          className="absolute top-0 right-0 p-0 mx-3 my-2 hover:text-blue-700 group-hover:text-white border-0"
-                          onClick={(event) => {
-                            event.preventDefault();
-                          }}
-                        >
-                          <MenubarMenu>
-                            <MenubarTrigger
-                              className="px-0 py-0.5 hover:bg-transparent"
-                              onClick={() => setSelectedYear(year)}
-                            >
-                              <MoreVertical
-                                className="text-inherit"
-                                size={16}
-                              />
-                            </MenubarTrigger>
-                            <MenubarContent>
-                              <h6 className="text-base px-1.5 text-muted-foreground">
-                                Ano: {year.year}
-                              </h6>
-                              <MenubarSeparator />
-                              <MenubarGroup>
-                                <MenubarItem onClick={handleOpenDialog}>
-                                  <Pen className="mr-1" /> Editar
-                                </MenubarItem>
-                                <MenubarItem>
-                                  <UserPlus className="mr-1" /> Convidar
-                                </MenubarItem>
-                              </MenubarGroup>
-                              <MenubarSeparator />
-                              <MenubarItem
-                                variant="destructive"
-                                onClick={handleOpenDeleteDialog}
-                              >
-                                <Trash2 className="mr-1" /> Delete
-                              </MenubarItem>
-                            </MenubarContent>
-                          </MenubarMenu>
-                        </Menubar>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-inherit">Ano</p>
-                        <p className="text-xl font-medium text-inherit">
-                          {year.year}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
+                    year={year}
+                    menu={{
+                      onClick: () => setSelectedYear(year),
+                    }}
+                    checkbox={{
+                      checked: selectedIds.has(year.id),
+                      onCheckedChange: () => toggleSelected(year.id),
+                    }}
+                    dialog={{
+                      items: [
+                        {
+                          name: "Editar",
+                          icon: Pen,
+                          onClick: handleOpenDialog,
+                        },
+                        {
+                          name: "Convidar",
+                          icon: UserPlus,
+                          onClick: handleOpenDialog,
+                        },
+                        {
+                          name: "Remover",
+                          icon: Trash2,
+                          variant: "destructive",
+                          onClick: handleOpenDialog,
+                        },
+                      ],
+                    }}
+                  />
                 ))}
               </div>
             )}

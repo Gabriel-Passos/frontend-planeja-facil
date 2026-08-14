@@ -1,5 +1,5 @@
-import { EmailVerificationBanner } from "@/src/components/EmailVerificationBanner";
-import { DashboardLayout } from "@/src/components/layout/DashboardLayout";
+import { EmailVerificationBanner } from "@/src/components/email-verification-banner";
+import { DashboardLayout } from "@/src/components/layout/dashboard-layout";
 
 export function Profile() {
   return (
