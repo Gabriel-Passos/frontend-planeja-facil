@@ -11,11 +11,20 @@ export interface YearMonthsStatus {
   months: MonthStatusEntry[];
 }
 
+export type RecurrenceType = "NONE" | "INSTALLMENT" | "RECURRING";
+
 export interface Income {
   id: string;
   description: string;
   type: "SALARIO" | "RENDA_EXTRA" | "OUTROS";
   value: string; // Decimal do Prisma serializa como string em JSON
+  date: string;
+  recurrenceType: RecurrenceType;
+  groupId: string | null;
+  installmentNumber: number | null;
+  totalInstallments: number | null;
+  groupTotalValue: number | null; // soma de todas as ocorrências do grupo
+  createdAt: string;
 }
 
 export interface Expense {
@@ -23,7 +32,44 @@ export interface Expense {
   name: string;
   category: string;
   value: string;
-  installments: number;
+  date: string;
+  recurrenceType: RecurrenceType;
+  groupId: string | null;
+  installmentNumber: number | null;
+  totalInstallments: number | null;
+  groupTotalValue: number | null;
+  createdAt: string;
+}
+
+// Payloads de request — o que a API espera receber, não o que ela devolve
+interface RecurrenceInput {
+  recurrent?: boolean;
+  inInstallments?: boolean;
+  qtdInstallments?: number;
+  installmentValue?: number; // valor de CADA parcela, só quando inInstallments
+}
+
+export interface CreateIncomePayload extends RecurrenceInput {
+  description: string;
+  type?: Income["type"];
+  value?: number; // opcional quando inInstallments (usa installmentValue)
+  date: string;
+}
+
+export type UpdateIncomePayload = Partial<CreateIncomePayload>;
+
+export interface CreateExpensePayload extends RecurrenceInput {
+  name: string;
+  category: string;
+  value?: number;
+  date: string;
+}
+
+export type UpdateExpensePayload = Partial<CreateExpensePayload>;
+
+export interface CardKpi {
+  title: string;
+  value: number;
 }
 
 export interface MonthCard {
