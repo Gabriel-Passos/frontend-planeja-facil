@@ -1,3 +1,5 @@
+> Em desenvolvimento ⚠
+
 # 💰 Planeja Fácil — Frontend
 
 Aplicação web para controle de finanças pessoais, permitindo organizar receitas e despesas por ano e por mês, com colaboração entre múltiplos usuários por meio de papéis de acesso.
