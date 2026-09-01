@@ -7,7 +7,7 @@ import { AppRoutes } from "@/src/constants/app-routes";
 import { AuthLayout } from "@/src/components/layout/auth-layout";
 import { CustomInput } from "@/src/components/common/custom-input";
 import { Lock, Mail, User } from "lucide-react";
-import { ConfirmPasswordRules } from "./confirm-password-rules";
+import { ConfirmPasswordRules } from "../components/confirm-password-rules";
 import { Field } from "@/src/components/ui/field";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { Label } from "@/src/components/ui/label";
@@ -33,13 +33,18 @@ export function RegisterForm() {
   const [checkedTerms, setCheckedTerms] = useState(false);
 
   const formik = useFormik({
-    initialValues: { name: "", email: "", password: "", confirmPassowrd: "" },
+    initialValues: { name: "", email: "", password: "", confirmPassword: "" },
     validationSchema: registerSchema,
     validateOnChange: false,
     validateOnBlur: true,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        await api.post("/auth/register", values);
+        const formatedValeus = {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        };
+        await api.post("/auth/register", formatedValeus);
         navigate(AppRoutes.LOGIN, {
           state: { justRegistered: true },
           replace: true,
@@ -109,18 +114,18 @@ export function RegisterForm() {
           <CustomInput
             icon={Lock}
             name="confirmPassword"
-            value={formik.values.confirmPassowrd}
+            value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             type="password"
             placeholder="**********"
             label="Confirmar a senha"
             hasError={
-              formik.touched.confirmPassowrd && !!formik.errors.confirmPassowrd
+              formik.touched.confirmPassword && !!formik.errors.confirmPassword
             }
             helperText={
-              formik.touched.confirmPassowrd
-                ? formik.errors.confirmPassowrd
+              formik.touched.confirmPassword
+                ? formik.errors.confirmPassword
                 : ""
             }
             required

@@ -1,7 +1,6 @@
 import { AppSidebar } from "../app-sidebar";
 import { Progress } from "../ui/progress";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "../ui/sidebar";
-import { Toaster } from "../ui/toast";
 
 interface DashboardLayoutProps {
   loading?: boolean;
@@ -24,10 +23,7 @@ export function DashboardLayout({
           ) : (
             <div className="w-full flex flex-col gap-6">
               <SidebarTrigger />
-              <div className="w-full max-w-400 mx-auto px-6">
-                {children}
-                <Toaster />
-              </div>
+              <div className="w-full max-w-400 mx-auto px-6">{children}</div>
             </div>
           )}
         </main>

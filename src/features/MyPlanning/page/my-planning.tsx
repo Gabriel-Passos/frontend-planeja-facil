@@ -1,11 +1,7 @@
 import { DashboardLayout } from "@/src/components/layout/dashboard-layout";
 import { Button } from "@/src/components/ui/button";
 import { Pen, Plus, Trash2, UserPlus } from "lucide-react";
-import { YearDialog } from "./year-dialog";
 import { useState } from "react";
-import { useYearsList } from "../../hooks/useYearList";
-import { useYearMutations } from "../../hooks/useYearMutations";
-import type { Year } from "../../types/year.types";
 import { Input } from "@/src/components/ui/input";
 import { Separator } from "@/src/components/ui/separator";
 import { Field } from "@/src/components/ui/field";
@@ -19,17 +15,21 @@ import {
 } from "@/src/components/ui/select";
 import { useProgressiveLoading } from "@/src/hooks/use-progressive-loading";
 
-import { DeleteDialog } from "../../../../components/common/delete-dialog";
 import { toast } from "@/src/components/ui/toast";
 import { getErrorMessage } from "@/src/lib/utils/getErrorMessage";
-import { formatBulkResultMessage } from "../../utils/formatBulkResultMessage";
 import { Checkbox } from "@/src/components/ui/checkbox";
 import { YearCard } from "@/src/components/common/year-card";
 import { LayoutHeader } from "@/src/components/common/layout-header";
+import { useYearsList } from "../hooks/useYearList";
+import { useYearMutations } from "../hooks/useYearMutations";
+import type { Year } from "../types/year.types";
+import { formatBulkResultMessage } from "../utils/format-bulk-result-message";
+import { DeleteDialog } from "@/src/components/common/delete-dialog";
+import { YearDialog } from "../components/year-dialog";
 
 const LIMIT_OPTIONS = [8, 16, 24, 32];
 
-export function Years() {
+export function MyPlanning() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openBulkDeleteDialog, setOpenBulkDeleteDialog] = useState(false);
@@ -180,20 +180,22 @@ export function Years() {
         <LayoutHeader
           title="Meu planejamento"
           description="Organize suas finanças em anos."
-          button={{
-            text: "Adicionar",
-            icon: Plus,
-            onClick: () => {
-              setSelectedYear(undefined);
-              handleOpenDialog();
+          buttons={[
+            {
+              text: "Adicionar ano",
+              icon: Plus,
+              onClick: () => {
+                setSelectedYear(undefined);
+                handleOpenDialog();
+              },
             },
-          }}
+          ]}
         />
 
         <Separator orientation="horizontal" />
 
         {isFirstTimeEmpty ? (
-          <div className="mt-64 flex flex-col gap-8 items-center border rounded w-fit mx-auto px-6 py-4">
+          <div className="bg-white mt-64 flex flex-col gap-8 items-center border rounded w-fit mx-auto px-6 py-4">
             <div className="flex flex-col gap-4 text-center">
               <h6 className="text-lg font-medium text-foreground">
                 Comece a planejar seu futuro
@@ -208,7 +210,7 @@ export function Years() {
 
             <Button
               type="button"
-              className="w-fit"
+              className="w-fit text-white"
               onClick={() => {
                 setSelectedYear(undefined);
                 handleOpenDialog();
@@ -293,7 +295,7 @@ export function Years() {
                   <Checkbox
                     checked={allVisibleSelected}
                     onCheckedChange={toggleSelectAllVisible}
-                    className="bg-white border-border rounded"
+                    className="bg-white rounded"
                   />
                   Selecionar todos nesta página
                 </label>
@@ -345,13 +347,13 @@ export function Years() {
                         {
                           name: "Convidar",
                           icon: UserPlus,
-                          onClick: handleOpenDialog,
+                          onClick: () => {},
                         },
                         {
                           name: "Remover",
                           icon: Trash2,
                           variant: "destructive",
-                          onClick: handleOpenDialog,
+                          onClick: handleOpenDeleteDialog,
                         },
                       ],
                     }}

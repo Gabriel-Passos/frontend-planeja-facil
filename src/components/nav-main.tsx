@@ -23,7 +23,7 @@ export function NavMain({
   const location = useLocation();
 
   function getActiveRoute(route: string) {
-    if (location.pathname === route) {
+    if (location.pathname.includes(route)) {
       return "bg-teal-800 text-white";
     }
     return "";
